@@ -4,7 +4,6 @@
 
 // });
 
-let hornedBeasts = [];
 
 
 
@@ -19,13 +18,19 @@ function readJson () {
       });
     })
     .then(function() {
+      console.log(hornedBeasts);
       hornedBeasts.forEach(differentGeneric => {
         differentGeneric.render();
       });
-    });
+    }).then(fillAllSelects);
 }
 
 $(() => readJson());
+
+
+
+
+
 
 
 
@@ -34,6 +39,8 @@ $(() => readJson());
 // image_url: "http://3.bp.blogspot.com/_DBYF1AdFaHw/TE-f0cDQ24I/AAAAAAAACZg/l-FdTZ6M7z8/s1600/Unicorn_and_Narwhal_by_dinglehopper.jpg"
 // keyword: "narwhal"
 // title: "UniWhal"
+let hornedBeasts = [];
+let x = $('main');
 
 
 let HornMaker = function(catchall){
@@ -51,6 +58,7 @@ let HornMaker = function(catchall){
 arrofClones = [];
 
 HornMaker.prototype.render = function(){
+
   $('main').append('<div class="clone"></div>');
   let $clone = $('div[class="clone"]');
   let photoTemplate = $('#photo-template').html();
@@ -59,21 +67,24 @@ HornMaker.prototype.render = function(){
   $clone.find('p').text(this.description);
   $clone.find('img').attr('src', this.image_url);
   let fullClone = $clone.html();
-  var htmlobject =
   // let jsonVersion = JSON.stringify(fullClone);
   // console.log(fullClone);
   $clone.removeClass('clone');
   $clone.attr('class', this.title);
   let $main = $('main');
-
 };
 
 console.log(hornedBeasts.length);
 
 HornMaker.prototype.passUrl = function () {
 
-
 };
+
+HornMaker.prototype.logMe = function () {
+console.log('log me!');
+};
+
+
 
 // let trial = new HornMaker('description',4,'image_url','keyword','title');
 
@@ -91,7 +102,6 @@ HornMaker.prototype.passUrl = function () {
   <option value="unicorn">unicorn</option> */}
 
 
-// $('select[name="icecream"]').on('change', function() {
 
 //   let $selection = $(this).val();
 //   console.log($selection);
@@ -99,8 +109,7 @@ HornMaker.prototype.passUrl = function () {
 // $(`img[data-flavor="${$selection}"]`).show()
 // })
 
-let $main = $('main');
-console.log($main.children());
+
 
 $('select[name="horned"]').on('change',function(){
   let $selection = $(this).val();
@@ -109,7 +118,7 @@ $('select[name="horned"]').on('change',function(){
   console.log($selection);
   // $('img').hide();
 
-  // $(`img[keyword="${$selection}"]`).show();
+  $(`img[keyword="${$selection}"]`).show();
 
   let url = 'https://www.dhresource.com/0x0s/f2-albu-g5-M00-1A-….jpg/wholesale-halloween-costume-prop-unicorn.jpg';
 
@@ -137,9 +146,11 @@ $('select[name="horned"]').on('change',function(){
 
 });
 
-let shower = () => {
-  $('img').show();
-};
+// let shower = () => {
+//   $('img').show();
+//   console.log(gringo);
+// };
+// shower(me);
 
 const image = $('img');
 console.log(image);
@@ -170,44 +181,33 @@ function imgappender (hornedBeastIndexToDisplay){
 
 }
 
+let fillAllSelects = function () {
+  hornedBeasts.forEach(beast => {
+    let select = $('select[name="horned"]');
+    console.log(select);
+    let option = `<option value="${beast.keyword}">${beast.keyword}</option>`;
+    select.append(option);
 
-$("#forCLickingNewImgs").click(function(){
-let index = $('#forGivingAnIndex').val();
-imgappender(index);
+    // <option value="default">Filter by Keyword</option>
+  });
+}
+
+// also this doesn't work except in dev tools 
+fillAllSelects();
+
+
+
+
+
+$('#forCLickingNewImgs').click(function(){
+  let index = $('#forGivingAnIndex').val();
+  imgappender(index);
 });
 
 function btnNewImgClick () {
   let btn = $('#forCLickingNewImgs');
   btn.on('click', function(){
     console.log('click');
-  }
+    }
   );
 }
-
-//only seems to work in dev tools.
-// imgappender();
-
-
-
-
-$(document).ready(function() {
-//why is hornedbeasts inaccesbile
-//neither console log work
-  console.log(hornedBeasts[0]);
-  console.log(hornedBeasts.length);
-
-});
-
-// let tryIt = $('select');
-// console.log(tryIt.html);
-
-// let tryAgain = $('tryMe');
-// // console.log(tryAgain);
-
-// tryIt.on('click', function(){
-//   let $whereToGo = $(this).data('keyword');
-//   console.log($whereToGo);
-
-// });
-
-
